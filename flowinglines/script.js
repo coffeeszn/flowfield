@@ -81,16 +81,24 @@ class Effect {
         this.currentLineWidth = 10;
         this.debug = true;
         this.zooming = true;
+        const self = this;
         this.init();
 
         window.addEventListener('keydown', e => {
             if (e.key === 'e'){
                 this.debug = !this.debug;
-            } else if (e.key === 'f'){
-                this.toggleZoom();
             }
         });
-    }
+
+        window.addEventListener('touchstart', function(){
+            self.toggleZoom();
+        });
+
+        window.addEventListener('click', function(){
+            self.toggleZoom();
+        });
+
+        }
     init(){
         // create flow field
         this.rows = Math.floor(this.height / this.cellSize)
@@ -135,6 +143,7 @@ class Effect {
             context.beginPath();
             context.moveTo(this.cellSize * c, 0);
             context.lineTo(this.cellSize * c, this.height);
+            context.lineWidth = 0.6;
             context.strokeStyle = 'grey';
             context.stroke();
         }
